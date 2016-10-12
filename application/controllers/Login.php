@@ -25,4 +25,11 @@ class Login extends CI_Controller {
 		$this->load->view('login');
 		$this->load->view('common/footer');		
 	}
+
+	public function addUser()
+	{
+		$this->load->model('LoginModel');
+
+		$this->LoginModel->addUser();
+	}
 }
