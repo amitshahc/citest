@@ -20,10 +20,35 @@ class Login extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->library('session');
+		$this->load->library('form_validation', Null, 'FV');
+
+		//print_r($this->input->post());
+
+		if( $this->input->post('uname') )
+			echo $this->input->post('uname');
+
+		$this->FV->set_rules('uname','Username','required|callback_checkUniqie');
+		$this->FV->set_rules('pword','Password','required');
+
+		if ($this->FV->run() == FALSE)
+        {
+        	echo "not ok";
+        	//$this->load->view('myform');
+        }
+        else
+        {
+        	echo "ok";
+			//$this->load->view('formsuccess');
+        }
+				
 		$this->load->view('common/header');
-		$this->load->view('login');
+		$this->load->view('login', $this->input->post());
 		$this->load->view('common/footer');		
+	}
+
+	public function checkUnique($uname)
+	{
+		return false;
 	}
 
 	public function addUser()
